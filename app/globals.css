@@ -7392,6 +7392,42 @@ h1, h2, h3, h4 {
 }
 .mn-grid .pd-card { border: 1px solid #f1e9dd; }
 
+/* "ALL" view — products grouped under a heading per category */
+.mn-group { margin-top: 56px; }
+.mn-group + .mn-group { margin-top: 90px; }
+.mn-group-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f1e9dd;
+}
+.mn-group-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  color: var(--accent);
+}
+.mn-group-icon svg { width: 100%; height: 100%; }
+.mn-group-head h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #1a1a1a;
+}
+.mn-group-all {
+  margin-left: auto;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.mn-group-all:hover { text-decoration: underline; }
+@media (max-width: 640px) {
+  .mn-group-head h2 { font-size: 1.1rem; }
+  .mn-group-all { margin-left: 0; width: 100%; }
+}
+
 /* ---------- ORDER ---------- */
 .od-steps {
   list-style: none;

@@ -3,7 +3,7 @@
 
 export const ALL = "ALL";
 
-export const products = [
+const productList = [
   {
     name: "Pure Homemade Honey",
     sub: "Raw & Unprocessed",
@@ -521,3 +521,8 @@ export const tabs = [
   },
 ];
 
+// keep products grouped by category, in the same order as the category tabs
+const tabOrder = tabs.map((t) => t.id);
+export const products = [...productList].sort(
+  (a, b) => tabOrder.indexOf(a.category) - tabOrder.indexOf(b.category)
+);

@@ -134,6 +134,31 @@ export default function MenuBrowser() {
             SHOW ALL PRODUCTS
           </button>
         </div>
+      ) : cat === ALL ? (
+        // "ALL" view: one section per category, in tab order
+        tabs
+          .filter((t) => t.id !== ALL)
+          .map((t) => {
+            const items = visible.filter((p) => p.category === t.id);
+            if (!items.length) return null;
+            return (
+              <section key={t.id} className="mn-group" aria-label={t.label}>
+                <header className="mn-group-head">
+                  <span className="mn-group-icon" aria-hidden="true">{t.icon}</span>
+                  <h2>{t.label}</h2>
+                  <span className="mn-cat-count">{items.length}</span>
+                  <button type="button" className="mn-group-all" onClick={() => chooseCat(t.id)}>
+                    View only {t.label.toLowerCase()} →
+                  </button>
+                </header>
+                <div className="mn-grid">
+                  {items.map((p) => (
+                    <ProductCard key={p.name} product={p} />
+                  ))}
+                </div>
+              </section>
+            );
+          })
       ) : (
         <div className="mn-grid">
           {visible.map((p) => (
