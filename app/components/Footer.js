@@ -76,6 +76,8 @@ export default function Footer() {
               <li><a href="/menu?cat=SPICES">Stone-Ground Masala</a></li>
               <li><a href="/menu?cat=PICKLES">Traditional Pickles</a></li>
               <li><a href="/menu?cat=JAGGERY">Organic Jaggery</a></li>
+              <li><a href="/menu?cat=GRAINS">Grains &amp; Millets</a></li>
+              <li><a href="/menu?cat=CHIPS">Homemade Chips</a></li>
             </ul>
           </div>
 

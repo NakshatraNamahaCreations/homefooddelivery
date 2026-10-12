@@ -21,7 +21,7 @@ export const products = [
     img: "/turmeric-powder-wooden-bowl-with-green-leaves_9975-132220-removebg-preview.png",
   },
   {
-    name: "Homemade Pickles",
+    name: "Mixed Pickle",
     sub: "Traditional Family Recipe",
     price: 58.0,
     rating: 4,
@@ -148,6 +148,214 @@ export const products = [
     category: "VEGGIES",
     img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&q=85",
   },
+  {
+    name: "Wild Forest Honey",
+    sub: "Western Ghats, Raw & Unfiltered",
+    price: 130.0,
+    rating: 5,
+    category: "HONEY",
+    img: "/golden-honey-glass-jar-with-burlap-lid_84443-76686-removebg-preview.png",
+  },
+  {
+    name: "Chutney Powder",
+    sub: "Roasted Dal & Chilli Blend",
+    price: 32.0,
+    rating: 4,
+    category: "SPICES",
+    img: "/still-life-with-various-spices-removebg-preview.png",
+  },
+  {
+    name: "Vangibath Powder",
+    sub: "Karnataka-Style Brinjal Rice Masala",
+    price: 34.0,
+    rating: 4,
+    category: "SPICES",
+    img: "/still-life-with-various-spices-removebg-preview.png",
+  },
+  {
+    name: "Puliyogare Powder",
+    sub: "Tangy Tamarind Rice Mix",
+    price: 34.0,
+    rating: 4,
+    category: "SPICES",
+    img: "/still-life-with-various-spices-removebg-preview.png",
+  },
+  {
+    name: "Bisibelebath Powder",
+    sub: "Traditional Hot Lentil Rice Masala",
+    price: 36.0,
+    rating: 4,
+    category: "SPICES",
+    img: "/still-life-with-various-spices-removebg-preview.png",
+  },
+  {
+    name: "Garam Masala",
+    sub: "Whole Spices, Freshly Ground",
+    price: 38.0,
+    rating: 4,
+    category: "SPICES",
+    img: "/still-life-with-various-spices-removebg-preview.png",
+  },
+  {
+    name: "Kusubalakki (Red Boiled Rice)",
+    sub: "Unpolished Coastal Rice",
+    price: 19.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Ragi (Finger Millet)",
+    sub: "Calcium-Rich, Farm Grown",
+    price: 16.0,
+    rating: 5,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Jowar (Sorghum)",
+    sub: "Gluten-Free Whole Grain",
+    price: 15.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Navane (Foxtail Millet)",
+    sub: "Cleaned & Unpolished",
+    price: 24.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Saame (Little Millet)",
+    sub: "Light & Easy to Digest",
+    price: 25.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Haraka (Kodo Millet)",
+    sub: "High-Fibre Siridhanya",
+    price: 25.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Oodalu (Barnyard Millet)",
+    sub: "Low-GI Siridhanya",
+    price: 26.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Korale (Browntop Millet)",
+    sub: "Rare Native Millet",
+    price: 32.0,
+    rating: 4,
+    category: "GRAINS",
+    img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&q=85",
+  },
+  {
+    name: "Toor Dal",
+    sub: "Unpolished Togari Bele",
+    price: 32.0,
+    rating: 4,
+    category: "DALS",
+    img: "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600&q=85",
+  },
+  {
+    name: "Moong Dal",
+    sub: "Split Hesaru Bele",
+    price: 30.0,
+    rating: 4,
+    category: "DALS",
+    img: "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600&q=85",
+  },
+  {
+    name: "Urad Dal",
+    sub: "Whole-Grade Uddina Bele",
+    price: 32.0,
+    rating: 4,
+    category: "DALS",
+    img: "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600&q=85",
+  },
+  {
+    name: "Chana Dal",
+    sub: "Kadale Bele, Sun-Dried",
+    price: 24.0,
+    rating: 4,
+    category: "DALS",
+    img: "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600&q=85",
+  },
+  {
+    name: "Horse Gram",
+    sub: "Hurali, Protein-Rich",
+    price: 22.0,
+    rating: 4,
+    category: "DALS",
+    img: "https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=600&q=85",
+  },
+  {
+    name: "Joni Bella (Liquid Jaggery)",
+    sub: "Seasonal Sugarcane Syrup",
+    price: 44.0,
+    rating: 5,
+    category: "JAGGERY",
+    img: "/side-view-different-types-lump-sugar-bowls-white-background-removebg-preview.png",
+  },
+  {
+    name: "Mango Pickle",
+    sub: "Raw Mango, Sun-Cured",
+    price: 36.0,
+    rating: 5,
+    category: "PICKLES",
+    img: "/pickled-red-peppers-mushrooms-glass-jar-wooden-plate__1_-removebg-preview.png",
+  },
+  {
+    name: "Lemon Pickle",
+    sub: "Tangy Nimbe Uppinakayi",
+    price: 32.0,
+    rating: 4,
+    category: "PICKLES",
+    img: "/pickled-red-peppers-mushrooms-glass-jar-wooden-plate__1_-removebg-preview.png",
+  },
+  {
+    name: "Jackfruit Papad",
+    sub: "Halasina Happala, Sun-Dried",
+    price: 28.0,
+    rating: 5,
+    category: "PAPAD",
+    img: "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&q=85",
+  },
+  {
+    name: "Rice Papad",
+    sub: "Thin & Crisp, Handmade",
+    price: 22.0,
+    rating: 4,
+    category: "PAPAD",
+    img: "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&q=85",
+  },
+  {
+    name: "Jackfruit Chips",
+    sub: "Fried in Coconut Oil",
+    price: 36.0,
+    rating: 5,
+    category: "CHIPS",
+    img: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=600&q=85",
+  },
+  {
+    name: "Banana Chips",
+    sub: "Nendran, Lightly Salted",
+    price: 30.0,
+    rating: 4,
+    category: "CHIPS",
+    img: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=600&q=85",
+  },
 ];
 
 export const tabs = [
@@ -232,6 +440,58 @@ export const tabs = [
         <path d="M8 22 l3 -10 h10 l3 10 z" />
         <path d="M11 12 l2 -4 h6 l2 4" />
         <path d="M11 17 h10" opacity="0.5" />
+      </svg>
+    ),
+  },
+  {
+    id: "GRAINS",
+    label: "GRAINS & MILLETS",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 28 v-20" />
+        <path d="M16 10 q-4 -1 -4 -5 q4 1 4 5 z" />
+        <path d="M16 10 q4 -1 4 -5 q-4 1 -4 5 z" />
+        <path d="M16 16 q-4 -1 -4 -5 q4 1 4 5 z" />
+        <path d="M16 16 q4 -1 4 -5 q-4 1 -4 5 z" />
+        <path d="M16 22 q-4 -1 -4 -5 q4 1 4 5 z" />
+        <path d="M16 22 q4 -1 4 -5 q-4 1 -4 5 z" />
+      </svg>
+    ),
+  },
+  {
+    id: "DALS",
+    label: "DALS",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 16 h22 q0 9 -11 9 t-11 -9 z" />
+        <circle cx="11" cy="13" r="2" />
+        <circle cx="16" cy="11" r="2" />
+        <circle cx="21" cy="13" r="2" />
+      </svg>
+    ),
+  },
+  {
+    id: "PAPAD",
+    label: "PAPAD",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="16" cy="16" r="10" />
+        <circle cx="12" cy="13" r="1" fill="currentColor" stroke="none" />
+        <circle cx="19" cy="12" r="1" fill="currentColor" stroke="none" />
+        <circle cx="20" cy="19" r="1" fill="currentColor" stroke="none" />
+        <circle cx="13" cy="20" r="1" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    id: "CHIPS",
+    label: "CHIPS",
+    icon: (
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 18 h20 l-2 7 q-8 2 -16 0 z" />
+        <ellipse cx="12" cy="13" rx="4" ry="3" />
+        <ellipse cx="20" cy="12" rx="4" ry="3" />
+        <ellipse cx="16" cy="16" rx="4" ry="2.5" />
       </svg>
     ),
   },
