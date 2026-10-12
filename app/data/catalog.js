@@ -114,7 +114,7 @@ const productList = [
     price: 130.0,
     rating: 5,
     category: "HONEY",
-    img: "/golden-honey-glass-jar-with-burlap-lid_84443-76686-removebg-preview.png",
+    img: "/products/wild-honey.jpg",
   },
   {
     name: "Joni Bella (Liquid Jaggery)",
@@ -122,7 +122,7 @@ const productList = [
     price: 44.0,
     rating: 5,
     category: "JAGGERY",
-    img: "/side-view-different-types-lump-sugar-bowls-white-background-removebg-preview.png",
+    img: "/products/liquid-jaggery.jpg",
   },
   {
     name: "Mango Pickle",
@@ -130,7 +130,7 @@ const productList = [
     price: 36.0,
     rating: 5,
     category: "PICKLES",
-    img: "/pickled-red-peppers-mushrooms-glass-jar-wooden-plate__1_-removebg-preview.png",
+    img: "/products/mango-pickle.jpg",
   },
   {
     name: "Lemon Pickle",
@@ -138,7 +138,7 @@ const productList = [
     price: 32.0,
     rating: 4,
     category: "PICKLES",
-    img: "/pickled-red-peppers-mushrooms-glass-jar-wooden-plate__1_-removebg-preview.png",
+    img: "/products/lemon-pickle.jpg",
   },
   {
     name: "Jackfruit Papad",

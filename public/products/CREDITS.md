@@ -31,3 +31,7 @@ Photos of fruits and vegetables are from Wikimedia Commons, resized. Licences re
 | jackfruit-chips.jpg | https://commons.wikimedia.org/wiki/File:Chakka-chips.JPG | Ranjithsiji | CC BY-SA 3.0 |
 | jackfruit-papad.jpg | https://commons.wikimedia.org/wiki/File:Papadsbangalore.jpg | Charles Haynes | CC BY-SA 2.0 |
 | rice-papad.jpg | https://commons.wikimedia.org/wiki/File:Rice_papad.jpg | Randhir | Public domain |
+| liquid-jaggery.jpg | https://commons.wikimedia.org/wiki/File:Kakvi_-_Kolhapuri_liquid_jaggery_(Organic_Chemical-free).jpg | Sushant Medhe Pawar of Kolhapur Agricultural Produce Market (Kolhapur Sheti Utpanna Bazar Samiti) from Kolhapur | CC0 |
+| mango-pickle.jpg | https://commons.wikimedia.org/wiki/File:Mango_Pickle_in_pot.jpg | Saileshpat | CC BY-SA 4.0 |
+| lemon-pickle.jpg | https://commons.wikimedia.org/wiki/File:Lemon_Pickle_in_Oil.JPG | Miansari66 | CC0 |
+| wild-honey.jpg | https://commons.wikimedia.org/wiki/File:Fresh_honeycomb_dripping_honey_India.jpg | Vraj Acharya | CC BY-SA 4.0 |
