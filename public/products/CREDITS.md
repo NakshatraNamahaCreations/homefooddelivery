@@ -27,3 +27,7 @@ Photos of fruits and vegetables are from Wikimedia Commons, resized. Licences re
 | bottle-gourd.jpg | https://commons.wikimedia.org/wiki/File:Fresh_Bottle_Gourd_(Lauki)_from_Home_Garden.jpg | MohitSinghRazput | CC BY-SA 4.0 |
 | ridge-gourd.jpg | https://commons.wikimedia.org/wiki/File:Luffa_acutangula_Chinese_okra.jpg | Nayan j Nath | CC BY-SA 4.0 |
 | cucumber.jpg | https://commons.wikimedia.org/wiki/File:ARS_cucumber.jpg | Stephen Ausmus, USDA ARS | Public domain |
+| banana-chips.jpg | https://commons.wikimedia.org/wiki/File:Kerala_banana_chips_Upperi_varuthath.jpg | Ramesh NG | CC BY-SA 2.0 |
+| jackfruit-chips.jpg | https://commons.wikimedia.org/wiki/File:Chakka-chips.JPG | Ranjithsiji | CC BY-SA 3.0 |
+| jackfruit-papad.jpg | https://commons.wikimedia.org/wiki/File:Papadsbangalore.jpg | Charles Haynes | CC BY-SA 2.0 |
+| rice-papad.jpg | https://commons.wikimedia.org/wiki/File:Rice_papad.jpg | Randhir | Public domain |

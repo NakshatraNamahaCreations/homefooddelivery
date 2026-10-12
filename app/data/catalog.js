@@ -146,7 +146,7 @@ const productList = [
     price: 28.0,
     rating: 5,
     category: "PAPAD",
-    img: "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&q=85",
+    img: "/products/jackfruit-papad.jpg",
   },
   {
     name: "Rice Papad",
@@ -154,7 +154,7 @@ const productList = [
     price: 22.0,
     rating: 4,
     category: "PAPAD",
-    img: "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=600&q=85",
+    img: "/products/rice-papad.jpg",
   },
   {
     name: "Jackfruit Chips",
@@ -162,7 +162,7 @@ const productList = [
     price: 36.0,
     rating: 5,
     category: "CHIPS",
-    img: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=600&q=85",
+    img: "/products/jackfruit-chips.jpg",
   },
   {
     name: "Banana Chips",
@@ -170,7 +170,7 @@ const productList = [
     price: 30.0,
     rating: 4,
     category: "CHIPS",
-    img: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=600&q=85",
+    img: "/products/banana-chips.jpg",
   },
   {
     name: "Banana",
