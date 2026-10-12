@@ -604,6 +604,7 @@ export function OrdersDrawer() {
                         <div className="hp-order-block">
                           <h5>Payment</h5>
                           <p>
+                            {o.payment.method === "online" && `Paid online · ${o.payment.paymentId}`}
                             {o.payment.method === "card" && `Card ending •••• ${o.payment.last4}`}
                             {o.payment.method === "upi"  && `UPI · ${o.payment.upi}`}
                             {o.payment.method === "cod"  && "Cash on Delivery"}

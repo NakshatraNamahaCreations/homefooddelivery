@@ -5227,7 +5227,19 @@ h1, h2, h3, h4 {
   font-weight: 600;
   margin-top: 4px;
 }
-.co-pay-note svg { color: #4a8a3a; }
+.co-pay-note svg { color: #4a8a3a; flex-shrink: 0; }
+
+.co-pay-error {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fdecec;
+  border: 1px solid #f5c2c2;
+  color: #b42318;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
 
 .co-cod {
   margin-top: 18px;

@@ -9,3 +9,9 @@
 # Next's static export writes a /404.html — Netlify uses that automatically.
 # We DON'T need a catch-all SPA rewrite here: each route (e.g. /checkout, /profile)
 # is pre-rendered as its own /<route>/index.html, so direct hits and refreshes work.
+
+# Razorpay payment functions (served at /api/razorpay/order and /api/razorpay/verify).
+# Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Netlify → Site configuration → Environment variables.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

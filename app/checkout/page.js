@@ -7,9 +7,22 @@ import { useShop } from "../components/ShopStore";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageHero from "../components/PageHero";
+import { FREE_DELIVERY_ABOVE, orderTotals } from "../data/pricing";
 
-const DELIVERY_FEE = 49;
-const FREE_DELIVERY_ABOVE = 499;
+const RAZORPAY_SCRIPT = "https://checkout.razorpay.com/v1/checkout.js";
+
+// loads Razorpay's checkout popup script once, on demand
+function loadRazorpay() {
+  if (typeof window === "undefined") return Promise.resolve(false);
+  if (window.Razorpay) return Promise.resolve(true);
+  return new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = RAZORPAY_SCRIPT;
+    s.onload = () => resolve(true);
+    s.onerror = () => resolve(false);
+    document.body.appendChild(s);
+  });
+}
 
 const IconBack = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -31,12 +44,6 @@ const IconCard = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
     <rect x="2" y="5" width="20" height="14" rx="2" />
     <line x1="2" y1="10" x2="22" y2="10" />
-  </svg>
-);
-const IconPhone = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="6" y="2" width="12" height="20" rx="2" />
-    <line x1="11" y1="18" x2="13" y2="18" />
   </svg>
 );
 const IconCash = () => (
@@ -80,9 +87,8 @@ const PERKS = [
 ];
 
 const METHODS = [
-  { id: "card", label: "Credit / Debit Card", hint: "Visa, Mastercard, RuPay", icon: <IconCard /> },
-  { id: "upi",  label: "UPI",                  hint: "GPay, PhonePe, Paytm",    icon: <IconPhone /> },
-  { id: "cod",  label: "Cash on Delivery",     hint: "Pay when it arrives",     icon: <IconCash /> },
+  { id: "online", label: "Pay Online",       hint: "UPI, cards, netbanking, wallets", icon: <IconCard /> },
+  { id: "cod",    label: "Cash on Delivery", hint: "Pay when it arrives",             icon: <IconCash /> },
 ];
 
 function StepTracker({ active }) {
@@ -103,11 +109,6 @@ function StepTracker({ active }) {
 }
 
 const onlyDigits = (s) => s.replace(/\D/g, "");
-const formatCard = (s) => onlyDigits(s).slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 ");
-const formatExpiry = (s) => {
-  const d = onlyDigits(s).slice(0, 4);
-  return d.length >= 3 ? `${d.slice(0, 2)}/${d.slice(2)}` : d;
-};
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -116,6 +117,7 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const [order, setOrder] = useState(null);
+  const [payError, setPayError] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -125,12 +127,7 @@ export default function CheckoutPage() {
     city: "",
     pincode: "",
     notes: "",
-    method: "card", // card | upi | cod
-    cardNumber: "",
-    cardName: "",
-    cardExpiry: "",
-    cardCvv: "",
-    upi: "",
+    method: "online", // online | cod
   });
 
   // redirect to home if cart is empty AND we're not on the success screen
@@ -153,9 +150,7 @@ export default function CheckoutPage() {
   }, [user]);
 
   const subTotal = cartTotal;
-  const deliveryFee = subTotal >= FREE_DELIVERY_ABOVE || subTotal === 0 ? 0 : DELIVERY_FEE;
-  const gst = useMemo(() => +(subTotal * 0.05).toFixed(2), [subTotal]);
-  const grandTotal = +(subTotal + deliveryFee + gst).toFixed(2);
+  const { deliveryFee, gst, grandTotal } = useMemo(() => orderTotals(subTotal), [subTotal]);
   const freeProgress = Math.min(100, (subTotal / FREE_DELIVERY_ABOVE) * 100);
 
   // tracker moves to "Payment" once the shipping block looks complete
@@ -165,13 +160,11 @@ export default function CheckoutPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     let v = value;
-    if (name === "cardNumber") v = formatCard(v);
-    if (name === "cardExpiry") v = formatExpiry(v);
-    if (name === "cardCvv") v = onlyDigits(v).slice(0, 4);
     if (name === "phone") v = onlyDigits(v).slice(0, 10);
     if (name === "pincode") v = onlyDigits(v).slice(0, 6);
     setForm((f) => ({ ...f, [name]: v }));
     setErrors((er) => ({ ...er, [name]: undefined }));
+    setPayError("");
   };
 
   const validate = () => {
@@ -183,29 +176,95 @@ export default function CheckoutPage() {
     if (!form.city.trim()) e.city = "Required";
     if (form.pincode.length !== 6) e.pincode = "6-digit pincode";
 
-    if (form.method === "card") {
-      const digits = onlyDigits(form.cardNumber);
-      if (digits.length < 15) e.cardNumber = "Card number must be 15–16 digits";
-      if (!form.cardName.trim()) e.cardName = "Required";
-      if (!/^\d{2}\/\d{2}$/.test(form.cardExpiry)) e.cardExpiry = "MM/YY";
-      else {
-        const [mm, yy] = form.cardExpiry.split("/").map((s) => parseInt(s, 10));
-        if (mm < 1 || mm > 12) e.cardExpiry = "Invalid month";
-        const now = new Date();
-        const cardYear = 2000 + yy;
-        if (cardYear < now.getFullYear() || (cardYear === now.getFullYear() && mm < now.getMonth() + 1)) {
-          e.cardExpiry = "Card expired";
-        }
-      }
-      if (form.cardCvv.length < 3) e.cardCvv = "3–4 digits";
-    }
-
-    if (form.method === "upi") {
-      if (!/^[\w.-]+@[\w.-]+$/.test(form.upi)) e.upi = "Format: name@bank";
-    }
-
     setErrors(e);
     return Object.keys(e).length === 0;
+  };
+
+  const shipping = () => ({
+    name: form.name,
+    phone: form.phone,
+    email: form.email,
+    address: form.address,
+    city: form.city,
+    pincode: form.pincode,
+    notes: form.notes,
+  });
+
+  const finish = (payment, breakdown) => {
+    const placed = placeOrder({ shipping: shipping(), payment, breakdown });
+    setOrder(placed);
+    setSubmitting(false);
+    setStep("success");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const failPayment = (msg) => {
+    setPayError(msg);
+    setSubmitting(false);
+  };
+
+  // creates a Razorpay order on the server, opens the payment popup, then has
+  // the server verify the payment signature before confirming the order
+  const payOnline = async () => {
+    if (!(await loadRazorpay())) {
+      return failPayment("Could not load the payment window. Check your internet connection and try again.");
+    }
+
+    let rzOrder;
+    try {
+      const res = await fetch("/api/razorpay/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: cart.map((it) => ({ name: it.name, qty: it.qty })),
+          shipping: shipping(),
+        }),
+      });
+      rzOrder = await res.json().catch(() => ({}));
+      if (!res.ok) return failPayment(rzOrder.error || "Could not start the payment. Please try again.");
+    } catch {
+      return failPayment("Could not reach the payment server. Please try again.");
+    }
+
+    const rzp = new window.Razorpay({
+      key: rzOrder.keyId,
+      order_id: rzOrder.orderId,
+      amount: rzOrder.amount,
+      currency: rzOrder.currency,
+      description: `${cart.reduce((s, it) => s + it.qty, 0)} items`,
+      prefill: { name: form.name, email: form.email, contact: form.phone },
+      theme: { color: "#c2410c" },
+      modal: {
+        ondismiss: () => {
+          // keep a failure reason from payment.failed if there was one
+          setPayError((prev) => prev || "Payment cancelled. Your cart is still here — try again whenever you're ready.");
+          setSubmitting(false);
+        },
+      },
+      handler: async (resp) => {
+        try {
+          const res = await fetch("/api/razorpay/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(resp),
+          });
+          const out = await res.json().catch(() => ({}));
+          if (!res.ok || !out.ok) throw new Error();
+        } catch {
+          return failPayment(
+            `We couldn't confirm your payment (ID ${resp.razorpay_payment_id}). If money was deducted, please contact us with this ID.`
+          );
+        }
+        finish(
+          { method: "online", paymentId: resp.razorpay_payment_id, razorpayOrderId: resp.razorpay_order_id },
+          rzOrder.breakdown
+        );
+      },
+    });
+    rzp.on("payment.failed", (resp) => {
+      setPayError(resp?.error?.description || "Payment failed. Please try again or choose another method.");
+    });
+    rzp.open();
   };
 
   const handleSubmit = (ev) => {
@@ -215,31 +274,10 @@ export default function CheckoutPage() {
       if (firstErr) firstErr.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
+    setPayError("");
     setSubmitting(true);
-    // simulate a payment round-trip
-    setTimeout(() => {
-      const placed = placeOrder({
-        shipping: {
-          name: form.name,
-          phone: form.phone,
-          email: form.email,
-          address: form.address,
-          city: form.city,
-          pincode: form.pincode,
-          notes: form.notes,
-        },
-        payment: {
-          method: form.method,
-          last4: form.method === "card" ? onlyDigits(form.cardNumber).slice(-4) : null,
-          upi: form.method === "upi" ? form.upi : null,
-        },
-        breakdown: { subTotal, deliveryFee, gst, grandTotal },
-      });
-      setOrder(placed);
-      setSubmitting(false);
-      setStep("success");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1100);
+    if (form.method === "online") payOnline();
+    else finish({ method: "cod" }, { subTotal, deliveryFee, gst, grandTotal });
   };
 
   if (step === "success") {
@@ -282,6 +320,7 @@ export default function CheckoutPage() {
                 <div className="co-success-row">
                   <span>Payment</span>
                   <strong>
+                    {o?.payment?.method === "online" && `Paid online · ${o.payment.paymentId}`}
                     {o?.payment?.method === "card" && `Card •••• ${o.payment.last4}`}
                     {o?.payment?.method === "upi" && `UPI · ${o.payment.upi}`}
                     {o?.payment?.method === "cod" && "Cash on Delivery"}
@@ -459,63 +498,11 @@ export default function CheckoutPage() {
                     ))}
                   </div>
 
-                  {form.method === "card" && (
+                  {form.method === "online" && (
                     <div className="co-pay-fields">
-                      <div className="co-field">
-                        <label>Card number *</label>
-                        <input
-                          name="cardNumber" value={form.cardNumber} onChange={handleChange}
-                          placeholder="1234 5678 9012 3456" inputMode="numeric" autoComplete="cc-number"
-                          className={`co-input ${errors.cardNumber ? "is-error" : ""}`}
-                        />
-                        {errors.cardNumber && <small className="co-err">{errors.cardNumber}</small>}
-                      </div>
-                      <div className="co-field">
-                        <label>Name on card *</label>
-                        <input
-                          name="cardName" value={form.cardName} onChange={handleChange}
-                          placeholder="AARAV SHARMA" autoComplete="cc-name"
-                          className={`co-input ${errors.cardName ? "is-error" : ""}`}
-                        />
-                        {errors.cardName && <small className="co-err">{errors.cardName}</small>}
-                      </div>
-                      <div className="co-row">
-                        <div className="co-field">
-                          <label>Expiry *</label>
-                          <input
-                            name="cardExpiry" value={form.cardExpiry} onChange={handleChange}
-                            placeholder="MM/YY" inputMode="numeric" autoComplete="cc-exp"
-                            className={`co-input ${errors.cardExpiry ? "is-error" : ""}`}
-                          />
-                          {errors.cardExpiry && <small className="co-err">{errors.cardExpiry}</small>}
-                        </div>
-                        <div className="co-field">
-                          <label>CVV *</label>
-                          <input
-                            name="cardCvv" value={form.cardCvv} onChange={handleChange}
-                            placeholder="123" inputMode="numeric" autoComplete="cc-csc"
-                            type="password"
-                            className={`co-input ${errors.cardCvv ? "is-error" : ""}`}
-                          />
-                          {errors.cardCvv && <small className="co-err">{errors.cardCvv}</small>}
-                        </div>
-                      </div>
-                      <p className="co-pay-note"><IconLock /> Your card details are encrypted end-to-end.</p>
-                    </div>
-                  )}
-
-                  {form.method === "upi" && (
-                    <div className="co-pay-fields">
-                      <div className="co-field">
-                        <label>UPI ID *</label>
-                        <input
-                          name="upi" value={form.upi} onChange={handleChange}
-                          placeholder="yourname@okhdfcbank"
-                          className={`co-input ${errors.upi ? "is-error" : ""}`}
-                        />
-                        {errors.upi && <small className="co-err">{errors.upi}</small>}
-                      </div>
-                      <p className="co-pay-note">A payment request will be sent to this UPI ID.</p>
+                      <p className="co-pay-note">
+                        <IconLock /> You&apos;ll pay in Razorpay&apos;s secure window — choose UPI (GPay, PhonePe, Paytm), card, netbanking or a wallet. We never see your card details.
+                      </p>
                     </div>
                   )}
 
@@ -584,6 +571,8 @@ export default function CheckoutPage() {
                       <div className="co-grand"><span>Total</span><span>₹{grandTotal.toFixed(2)}</span></div>
                     </div>
 
+                    {payError && <p className="co-pay-error" role="alert">{payError}</p>}
+
                     <button type="submit" className="co-submit" disabled={submitting}>
                       {submitting ? (
                         <>
@@ -591,7 +580,7 @@ export default function CheckoutPage() {
                         </>
                       ) : (
                         <>
-                          <IconLock /> PLACE ORDER · ₹{grandTotal.toFixed(2)}
+                          <IconLock /> {form.method === "online" ? "PAY" : "PLACE ORDER"} · ₹{grandTotal.toFixed(2)}
                         </>
                       )}
                     </button>
